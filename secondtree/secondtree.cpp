@@ -120,6 +120,38 @@ public:
         }
     }
 
+    void iterativePosorder()
+    {
+        stack<pair<ArvoreNo<T>*, bool>> travStack; // Stack to store nodes to be visited along with their visit status
+        ArvoreNo<T> *p = raiz; // Start with the root node
+
+        while (p != nullptr || !travStack.empty()) // Continue until there are nodes to be visited
+        {
+            while (p != nullptr) // Move to the leftmost node
+            {
+                travStack.push({p, false}); // Push the current node along with its visit status (false)
+                
+
+                p = p->left; // Move to the left child
+            }
+
+            // Check the visit status of the node at the top of the stack
+            auto [node, visited] = travStack.top();
+            if (!visited) // If the node has not been visited yet
+            {
+                travStack.top().second = true; // Update its visit status to true
+                p = node->right; // Move to the right child
+            }
+            else // If the node has been visited
+            {
+                cout << node->valor << " "; // Print the value of the node
+                travStack.pop(); // Pop the node from the stack
+            }
+        }
+    }
+
+    
+
     ArvoreNo<T> *removeMinimo(ArvoreNo<T> *&p)
     {
         if (p == nullptr)
@@ -263,14 +295,15 @@ int main()
     Arvore<int> arvore;
 
     // Inserindo elementos na árvore
-    arvore.inserirComRecursao(arvore.raiz, new ArvoreNo<int>(10));
-    arvore.inserirComRecursao(arvore.raiz, new ArvoreNo<int>(5));
-    arvore.inserirComRecursao(arvore.raiz, new ArvoreNo<int>(15));
-    arvore.inserirComRecursao(arvore.raiz, new ArvoreNo<int>(7));
-    arvore.inserirComRecursao(arvore.raiz, new ArvoreNo<int>(12));
+    arvore.inserirComRecursao(arvore.raiz, new ArvoreNo<int>(100));
+    
+    arvore.inserirComRecursao(arvore.raiz, new ArvoreNo<int>(70));
+    arvore.inserirComRecursao(arvore.raiz, new ArvoreNo<int>(40));
+    arvore.inserirComRecursao(arvore.raiz, new ArvoreNo<int>(80));
+    arvore.inserirComRecursao(arvore.raiz, new ArvoreNo<int>(220));
 
     // Teste BuscaSemRecursao
-    ArvoreNo<int> *resultadoBusca = arvore.BuscaSemRecursao(arvore.raiz, 12);
+    /*ArvoreNo<int> *resultadoBusca = arvore.BuscaSemRecursao(arvore.raiz, 12);
     if (resultadoBusca != nullptr)
     {
         cout << "Elemento 12 encontrado na árvore." << endl;
@@ -278,10 +311,10 @@ int main()
     else
     {
         cout << "Elemento 12 não encontrado na árvore." << endl;
-    }
+    }*/
 
     // Teste BuscaComRecursao
-    ArvoreNo<int> *resultadoBusca2 = arvore.BuscaComRecursao(arvore.raiz, 15);
+    /*ArvoreNo<int> *resultadoBusca2 = arvore.BuscaComRecursao(arvore.raiz, 15);
     if (resultadoBusca2 != nullptr)
     {
         cout << "Elemento 15 encontrado na árvore." << endl;
@@ -289,33 +322,35 @@ int main()
     else
     {
         cout << "Elemento 15 não encontrado na árvore." << endl;
-    }
+    }*/
 
     // Teste preOrdem
-    cout << "Pre-Ordem: ";
-    arvore.preOrdem(arvore.raiz);
-    cout << endl;
+    //cout << "Pre-Ordem: ";
+    //arvore.preOrdem(arvore.raiz);
+   // cout << endl;
 
     // Teste percursoExtensao
-    cout << "Percurso em extensão: ";
-    arvore.percursoExtensao();
-    cout << endl;
+    //cout << "Percurso em extensão: ";
+    //arvore.percursoExtensao();
+    //cout << endl;
 
     // Teste iterativePreorder
     cout << "Iterative Pre-Ordem: ";
     arvore.iterativePreorder();
     cout << endl;
-
-    // Teste removerNo
-    cout << "Removendo nó 10..." << endl;
-    arvore.removerNo(arvore.raiz, 10);
-    cout << "Pre-Ordem após remoção: ";
-    arvore.preOrdem(arvore.raiz);
+    cout << "Iterative Pos-Ordem: ";
+    arvore.iterativePosorder();
     cout << endl;
+    // Teste removerNo
+    //cout << "Removendo nó 10..." << endl;
+    //arvore.removerNo(arvore.raiz, 10);
+    //cout << "Pre-Ordem após remoção: ";
+    //arvore.preOrdem(arvore.raiz);
+    //cout << endl;
 
     // Teste remover mínimo
-    cout << "Removendo o nó mínimo..." << endl;
-    ArvoreNo<int> *minimoRemovido = arvore.removeMinimo(arvore.raiz);
+    //cout << "Removendo o nó mínimo..." << endl;
+   /*ArvoreNo<int> *minimoRemovido = arvore.removeMinimo(arvore.raiz);
     if (minimoRemovido != nullptr)
     {
         cout << "Nó mínimo removido: " << minimoRemovido->valor << endl;
@@ -324,10 +359,10 @@ int main()
     else
     {
         cout << "A árvore está vazia ou ocorreu um erro ao remover o nó mínimo." << endl;
-    }
+    }*/
 
     // Teste remover máximo
-    cout << "Removendo o nó máximo..." << endl;
+    /*cout << "Removendo o nó máximo..." << endl;
     ArvoreNo<int> *maximoRemovido = arvore.removeMaximo(arvore.raiz);
     if (maximoRemovido != nullptr)
     {
@@ -337,7 +372,7 @@ int main()
     else
     {
         cout << "A árvore está vazia ou ocorreu um erro ao remover o nó máximo." << endl;
-    }
+    }*/
 
     return 0;
 }
